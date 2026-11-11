@@ -4,1454 +4,1463 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111827">
-<title>PT3 Study Planner | Class IX</title>
+<title>Class 9 PT3 Study Hub</title>
 
 <style>
 :root {
-  --bg:#f4f6fb;
-  --panel:#ffffff;
-  --ink:#182033;
-  --muted:#68738a;
-  --line:#e5e9f2;
-  --accent:#635bdb;
-  --accent2:#eeeefe;
-  --green:#16865b;
-  --greenbg:#e7f7ef;
-  --shadow:0 12px 35px rgba(31,41,55,.07);
+  --bg: #f6f5fb;
+  --card: #ffffff;
+  --text: #25223a;
+  --muted: #77738d;
+  --primary: #7656d6;
+  --primary-light: #eee9ff;
+  --border: #e8e4f1;
+  --input: #f8f7fc;
+  --green: #249b70;
 }
 
-body[data-theme="dark"] {
-  --bg:#0d111b;
-  --panel:#171e2b;
-  --ink:#edf0fa;
-  --muted:#a0abc0;
-  --line:#2b3547;
-  --accent:#9b93ff;
-  --accent2:#292647;
-  --green:#42c995;
-  --greenbg:#17382f;
-  --shadow:0 12px 35px rgba(0,0,0,.2);
+body.dark {
+  --bg: #171622;
+  --card: #222031;
+  --text: #f1effb;
+  --muted: #aaa5bd;
+  --primary: #ad94ff;
+  --primary-light: #332b4c;
+  --border: #39354b;
+  --input: #2b283b;
+  --green: #65d5a6;
 }
 
-* { box-sizing:border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  transition:background .2s,color .2s;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  transition: background .2s, color .2s;
 }
 
-button { font:inherit; cursor:pointer; }
-
-.wrap {
-  max-width:1180px;
-  margin:auto;
-  padding:24px;
+button, input {
+  font: inherit;
 }
 
-.hero {
-  background:linear-gradient(125deg,#24234f,#635bdb 60%,#8c7cf4);
-  color:white;
-  border-radius:24px;
-  padding:30px;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
+button {
+  cursor: pointer;
 }
 
-.hero:after {
-  content:"";
-  position:absolute;
-  width:260px;
-  height:260px;
-  border:1px solid #ffffff2c;
-  border-radius:50%;
-  right:-65px;
-  top:-110px;
-  box-shadow:0 0 0 35px #ffffff0d,0 0 0 70px #ffffff0a;
-  pointer-events:none;
+header {
+  padding: 28px 7%;
+  background: linear-gradient(120deg, #7050cf, #a17ce8);
+  color: white;
 }
 
-.eyebrow {
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  font-size:11px;
-  font-weight:800;
-  opacity:.8;
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-h1 {
-  font-size:clamp(28px,5vw,44px);
-  line-height:1.08;
-  margin:10px 0;
+header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
 }
 
-.hero p {
-  max-width:650px;
-  color:#e5e4ff;
-  margin:10px 0 0;
+header p {
+  margin: 0;
+  opacity: .9;
 }
 
-.pills {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:20px;
+.theme-btn {
+  background: rgba(255,255,255,.18);
+  color: white;
+  border: 1px solid rgba(255,255,255,.4);
+  padding: 10px 15px;
+  border-radius: 12px;
 }
 
-.pill {
-  border:1px solid #ffffff50;
-  background:#ffffff18;
-  border-radius:99px;
-  padding:6px 11px;
-  font-size:12px;
-  font-weight:700;
+nav {
+  display: flex;
+  gap: 10px;
+  padding: 16px 7%;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.theme-toggle {
-  margin-top:17px;
-  padding:9px 15px;
-  border-radius:12px;
-  border:1px solid #ffffff55;
-  background:#ffffff18;
-  color:white;
-  font-weight:750;
-  transition:.2s;
-  position:relative;
-  z-index:1;
+.nav-btn {
+  border: none;
+  background: var(--input);
+  color: var(--muted);
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
-.theme-toggle:hover {
-  background:#ffffff30;
-  transform:translateY(-1px);
+.nav-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px 20px 60px;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--muted);
 }
 
 .stats {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin:18px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 22px;
 }
 
-.stat,.panel {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:18px;
-  box-shadow:var(--shadow);
-}
-
-.stat { padding:16px; }
-
-.stat small {
-  color:var(--muted);
-  display:block;
-  font-weight:650;
+.stat {
+  background: var(--card);
+  padding: 19px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
 }
 
 .stat strong {
-  font-size:25px;
-  display:block;
-  margin-top:3px;
+  display: block;
+  font-size: 25px;
+  margin-top: 8px;
 }
 
 .progress-track {
-  height:9px;
-  background:#eceefa;
-  border-radius:99px;
-  overflow:hidden;
-  margin-top:12px;
-}
-
-body[data-theme="dark"] .progress-track {
-  background:#30394a;
+  height: 9px;
+  background: var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
 .progress-fill {
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#635bdb,#36b58a);
-  border-radius:99px;
-  transition:width .25s;
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  border-radius: 20px;
+  transition: width .2s;
 }
 
-.layout {
-  display:grid;
-  grid-template-columns:1.12fr .88fr;
-  gap:16px;
-  align-items:start;
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.panel { padding:18px; }
-
-.panel-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:14px;
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-h2 { font-size:19px; margin:0; }
-.muted { color:var(--muted); }
-
-.controls {
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.btn {
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:var(--ink);
-  padding:8px 12px;
-  border-radius:10px;
-  font-weight:700;
-}
-
-.btn:hover,.filter:hover {
-  border-color:var(--accent);
-}
-
-.month-title {
-  font-size:18px;
-  font-weight:800;
-  min-width:145px;
-  text-align:center;
+.calendar-header button,
+.action-btn {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: none;
+  padding: 9px 13px;
+  border-radius: 9px;
+  font-weight: bold;
 }
 
 .calendar {
-  display:grid;
-  grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:6px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+  margin-top: 15px;
 }
 
-.weekday {
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  font-weight:800;
-  padding:5px 0;
+.day-name {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 8px 0;
+  font-weight: bold;
 }
 
-.day {
-  min-height:86px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--panel);
-  padding:7px;
-  text-align:left;
-  position:relative;
-  color:var(--ink);
+.date {
+  min-height: 66px;
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px;
+  text-align: left;
 }
 
-.day.empty {
-  background:transparent;
-  border-color:transparent;
-  pointer-events:none;
+.date.selected {
+  border: 2px solid var(--primary);
 }
 
-.day.weekend {
-  background:#f7f8fb;
-  color:#a5adbb;
+.date.today-plan {
+  background: var(--primary-light);
 }
 
-body[data-theme="dark"] .day.weekend {
-  background:#141b27;
-  color:#78859b;
+.date.exam {
+  border-color: #e5a64b;
 }
 
-.day.selected {
-  border:2px solid var(--accent);
-  padding:6px;
-  background:#f5f4ff;
+.date small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 10px;
 }
 
-body[data-theme="dark"] .day.selected {
-  background:#292647;
+.date.empty {
+  visibility: hidden;
 }
-
-.day.today:after {
-  content:"TODAY";
-  position:absolute;
-  top:7px;
-  right:6px;
-  font-size:8px;
-  color:var(--accent);
-  font-weight:900;
-}
-
-.daynum {
-  font-size:12px;
-  font-weight:850;
-}
-
-.daymarks {
-  display:flex;
-  gap:3px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-
-.dot {
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  display:inline-block;
-}
-
-.dot.math { background:#635bdb; }
-.dot.science { background:#16865b; }
-.dot.sanskrit { background:#d18a28; }
-.dot.sst { background:#cf5d75; }
-.dot.english { background:#2993bd; }
-.dot.exam { background:#202a42; }
-
-.day-label {
-  font-size:9px;
-  color:var(--muted);
-  margin-top:5px;
-  line-height:1.2;
-}
-
-.legend {
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:12px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.legend span {
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-.details { min-height:230px; }
 
 .task {
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:12px;
-  margin-top:10px;
-  background:var(--panel);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
 }
 
-.task-top {
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
+.task:last-child {
+  border-bottom: none;
 }
 
-.task input {
-  width:18px;
-  height:18px;
-  margin:2px 0 0;
-  accent-color:var(--green);
-  flex-shrink:0;
+.task input,
+.learn-item input {
+  accent-color: var(--primary);
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
-.task-title { font-weight:800; }
-
-.task-sub {
-  font-size:12px;
-  color:var(--muted);
-  margin-top:3px;
+.task.done span {
+  text-decoration: line-through;
+  color: var(--muted);
 }
 
-.task.done {
-  background:var(--greenbg);
-  border-color:#bde8d1;
+.exam-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
 }
 
-.task.done .task-title {
-  text-decoration:line-through;
-  color:#547866;
+.exam-row:last-child {
+  border: none;
 }
 
-body[data-theme="dark"] .task.done {
-  border-color:#28674e;
+.badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 5px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-body[data-theme="dark"] .task.done .task-title {
-  color:#9ad8bc;
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
 }
 
-.tag {
-  display:inline-block;
-  border-radius:99px;
-  padding:3px 8px;
-  font-size:10px;
-  font-weight:800;
-  margin:0 4px 5px 0;
-  background:#f0efff;
-  color:#5148bc;
+.controls input {
+  flex: 1;
+  min-width: 190px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px;
+  border-radius: 10px;
 }
 
-.tag.math { background:#efedff; color:#5148bc; }
-.tag.science { background:#e8f7ef; color:#14744e; }
-.tag.sanskrit { background:#fff3df; color:#9a5a0a; }
-.tag.sst { background:#fff0f2; color:#ad465e; }
-.tag.english { background:#eaf6fc; color:#18769d; }
-.tag.exam { background:#edf0f5; color:#344054; }
-
-body[data-theme="dark"] .tag.math {
-  background:#302d54;
-  color:#c4beff;
+.filter-btn {
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 13px;
+  border-radius: 9px;
 }
 
-body[data-theme="dark"] .tag.science {
-  background:#17382f;
-  color:#8de0b7;
+.filter-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
 }
 
-body[data-theme="dark"] .tag.sanskrit {
-  background:#49351e;
-  color:#ffd18a;
+.subject-section {
+  margin: 25px 0;
 }
 
-body[data-theme="dark"] .tag.sst {
-  background:#482631;
-  color:#ffabbc;
+.subject-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
 }
 
-body[data-theme="dark"] .tag.english {
-  background:#1d394b;
-  color:#9bdcff;
+.subject-heading h3 {
+  margin: 0;
 }
 
-body[data-theme="dark"] .tag.exam {
-  background:#30394a;
-  color:#d2d9e8;
+.chapter {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
-.filter-row {
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin:0 0 12px;
+.chapter summary {
+  cursor: pointer;
+  padding: 16px;
+  font-weight: bold;
+  list-style-position: inside;
 }
 
-.filter {
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:var(--muted);
-  border-radius:99px;
-  padding:6px 10px;
-  font-size:11px;
-  font-weight:800;
+.chapter-content {
+  padding: 0 17px 15px;
 }
 
-.filter.active {
-  background:var(--accent2);
-  border-color:#d6d3ff;
-  color:#5148bc;
+.chapter-meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 12px 25px;
 }
 
-body[data-theme="dark"] .filter.active {
-  color:#c4beff;
-  border-color:#625b9d;
+.learn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+  line-height: 1.45;
 }
 
-.empty-state {
-  padding:28px 12px;
-  text-align:center;
-  color:var(--muted);
+.learn-item.done span {
+  text-decoration: line-through;
+  color: var(--muted);
 }
 
-.exam-list {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:9px;
+.learn-count {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: normal;
 }
 
-.exam-card {
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:12px;
-  background:var(--panel);
+.routine li {
+  margin: 10px 0;
+  line-height: 1.5;
 }
 
-.exam-card strong {
-  display:block;
-  font-size:12px;
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.exam-card span {
-  display:block;
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.bottom {
-  margin-top:16px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-
-.tip {
-  background:#f7f6ff;
-  border:1px solid #e5e2ff;
-  border-radius:13px;
-  padding:13px;
-  color:#4b477d;
-  font-size:13px;
-}
-
-body[data-theme="dark"] .tip {
-  background:#24223c;
-  border-color:#403b69;
-  color:#d1ccff;
-}
-
-.footer {
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:22px;
-}
-
-@media(max-width:850px) {
-  .layout { grid-template-columns:1fr; }
-  .stats { grid-template-columns:repeat(2,1fr); }
-  .exam-list { grid-template-columns:repeat(2,1fr); }
-}
-
-@media(max-width:520px) {
-  .wrap { padding:13px; }
-  .hero { padding:23px 19px; border-radius:18px; }
-  .stats { gap:8px; }
-  .stat { padding:12px; }
-  .stat strong { font-size:21px; }
-  .panel { padding:13px; }
-  .day { min-height:66px; padding:5px; border-radius:9px; }
-  .day.selected { padding:4px; }
-  .day-label { font-size:8px; }
-  .day.today:after {
-    content:"•";
-    font-size:15px;
-    top:0;
-    right:5px;
+@media(max-width:600px) {
+  header h1 {
+    font-size: 24px;
   }
-  .month-title { min-width:125px; }
-  .bottom { grid-template-columns:1fr; }
+
+  nav {
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 10px 8px;
+  }
+
+  main {
+    padding: 18px 12px 40px;
+  }
+
+  .date {
+    min-height: 54px;
+    padding: 5px;
+    font-size: 13px;
+  }
+
+  .date small {
+    font-size: 9px;
+  }
+
+  .panel {
+    padding: 15px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-
-<header class="hero">
-  <div class="eyebrow">Class IX · Periodic Test 3 · 2026–27</div>
-
-  <h1>Your PT3 Study Planner</h1>
-
-  <p>
-    A focused weekday plan with two main study slots,
-    daily recall, revision and exam-day checklists.
-    Your progress is saved on this device.
-  </p>
-
-  <div class="pills">
-    <span class="pill">12 Nov – 7 Dec 2026</span>
-    <span class="pill">Monday–Friday study</span>
-    <span class="pill">3–4 hours · Evening</span>
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Class 9 PT3 Study Hub</h1>
+      <p>Your study planner, syllabus tracker and revision space.</p>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeButton">
+      🌙 Dark Mode
+    </button>
   </div>
-
-  <button class="theme-toggle" id="themeToggle">
-    🌙 Dark Mode
-  </button>
 </header>
 
-<section class="stats">
+<nav>
+  <button class="nav-btn active" onclick="showView('planner', this)">
+    📅 Daily Planner
+  </button>
+  <button class="nav-btn" onclick="showView('learn', this)">
+    📚 Learn / Syllabus
+  </button>
+</nav>
 
-  <div class="stat">
-    <small>Study tasks completed</small>
-    <strong id="doneCount">0 / 0</strong>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
+<main>
+
+<!-- DAILY PLANNER -->
+
+<section id="planner" class="view active">
+
+  <div class="stats">
+    <div class="stat">
+      <span class="muted">Daily tasks completed</span>
+      <strong id="dailyProgress">0%</strong>
+      <div class="progress-track">
+        <div class="progress-fill" id="dailyBar"></div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <span class="muted">Selected date</span>
+      <strong id="selectedDateText">12 Nov</strong>
+    </div>
+
+    <div class="stat">
+      <span class="muted">Next examination</span>
+      <strong id="nextExam">Mathematics</strong>
+      <span class="muted">30 November 2026</span>
     </div>
   </div>
 
-  <div class="stat">
-    <small>Overall completion</small>
-    <strong id="percent">0%</strong>
-    <span class="muted" style="font-size:11px">
-      Tick a task when finished
-    </span>
+  <div class="panel">
+    <div class="calendar-header">
+      <h2 id="monthTitle">November 2026</h2>
+      <div>
+        <button onclick="changeMonth(-1)">←</button>
+        <button onclick="changeMonth(1)">→</button>
+      </div>
+    </div>
+
+    <div class="calendar" id="calendar"></div>
   </div>
 
-  <div class="stat">
-    <small>Next exam</small>
-    <strong id="nextExam" style="font-size:19px">Maths</strong>
-    <span class="muted" id="nextExamDate" style="font-size:11px">
-      30 November
-    </span>
+  <div class="panel">
+    <h2 id="dayTitle">Thursday, 12 November</h2>
+    <p class="muted" id="dayDescription">Your study plan for this day.</p>
+    <div id="dailyTasks"></div>
   </div>
 
-  <div class="stat">
-    <small>Daily study target</small>
-    <strong>3–4 hrs</strong>
-    <span class="muted" style="font-size:11px">
-      Evening · two main slots
-    </span>
+  <div class="panel">
+    <h2>Examination timetable</h2>
+    <div class="exam-row">
+      <span>30 November — Monday</span>
+      <strong>Mathematics</strong>
+    </div>
+    <div class="exam-row">
+      <span>1 December — Tuesday</span>
+      <strong>IT</strong>
+    </div>
+    <div class="exam-row">
+      <span>2 December — Wednesday</span>
+      <strong>Sanskrit</strong>
+    </div>
+    <div class="exam-row">
+      <span>3 December — Thursday</span>
+      <strong>Science</strong>
+    </div>
+    <div class="exam-row">
+      <span>4 December — Friday</span>
+      <strong>English</strong>
+    </div>
+    <div class="exam-row">
+      <span>7 December — Monday</span>
+      <strong>Social Science</strong>
+    </div>
+  </div>
+
+  <div class="panel routine">
+    <h2>Daily study routine</h2>
+    <ul>
+      <li><strong>Slot 1:</strong> 75–90 minutes of focused study.</li>
+      <li><strong>Break:</strong> 10 minutes.</li>
+      <li><strong>Slot 2:</strong> 75–90 minutes of focused study.</li>
+      <li><strong>Final revision:</strong> 20–30 minutes of recall or practice.</li>
+    </ul>
+    <p class="muted">Target: approximately 3–4 hours in the evening.</p>
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" onclick="exportProgress()">Export daily progress CSV</button>
+    <button class="action-btn" onclick="resetDaily()">Reset daily checkboxes</button>
   </div>
 
 </section>
 
-<main class="layout">
 
-<section class="panel">
+<!-- FULL SYLLABUS / LEARN HUB -->
 
-  <div class="panel-head">
-    <div>
-      <h2>Study calendar</h2>
-      <div class="muted" style="font-size:12px">
-        Choose any date to see its plan
+<section id="learn" class="view">
+
+  <div class="panel">
+    <h2>📚 Your complete PT3 syllabus</h2>
+    <p class="muted">
+      This is your independent learning tracker. You can open any chapter,
+      study ahead, or revise an older topic whenever you want.
+      Your progress here is separate from the daily calendar.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="muted">Syllabus completed</span>
+        <strong id="learnPercent">0%</strong>
+        <div class="progress-track">
+          <div class="progress-fill" id="learnBar"></div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <span class="muted">Topics completed</span>
+        <strong id="learnCount">0 / 0</strong>
       </div>
     </div>
-
-    <div class="controls">
-      <button class="btn" id="prevMonth">‹</button>
-      <div class="month-title" id="monthTitle">
-        November 2026
-      </div>
-      <button class="btn" id="nextMonth">›</button>
-    </div>
   </div>
 
-  <div class="calendar" id="calendar"></div>
-
-  <div class="legend">
-    <span><i class="dot math"></i>Maths</span>
-    <span><i class="dot science"></i>Science</span>
-    <span><i class="dot sanskrit"></i>Sanskrit</span>
-    <span><i class="dot sst"></i>SST</span>
-    <span><i class="dot english"></i>English</span>
-    <span><i class="dot exam"></i>Exam</span>
+  <div class="controls">
+    <input
+      type="search"
+      id="syllabusSearch"
+      placeholder="Search chapters, topics or keywords..."
+      oninput="renderSyllabus()"
+    >
   </div>
 
-</section>
-
-<section class="panel details">
-
-  <div class="panel-head">
-    <div>
-      <h2 id="detailHeading">Thursday, 12 November</h2>
-      <div class="muted" style="font-size:12px">
-        Your selected day's checklist
-      </div>
-    </div>
-
-    <button class="btn" id="todayBtn">Today</button>
+  <div class="controls" id="subjectFilters">
+    <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Mathematics',this)">Maths</button>
+    <button class="filter-btn" onclick="setFilter('Science',this)">Science</button>
+    <button class="filter-btn" onclick="setFilter('Sanskrit',this)">Sanskrit</button>
+    <button class="filter-btn" onclick="setFilter('English',this)">English</button>
+    <button class="filter-btn" onclick="setFilter('Social Science',this)">SST</button>
   </div>
 
-  <div class="filter-row" id="filters">
-    <button class="filter active" data-filter="all">All</button>
-    <button class="filter" data-filter="math">Maths</button>
-    <button class="filter" data-filter="science">Science</button>
-    <button class="filter" data-filter="sanskrit">Sanskrit</button>
-    <button class="filter" data-filter="sst">SST</button>
-    <button class="filter" data-filter="english">English</button>
-  </div>
+  <div id="syllabusContainer"></div>
 
-  <div id="taskList"></div>
+  <div class="controls">
+    <button class="action-btn" onclick="resetLearn()">Reset syllabus progress</button>
+  </div>
 
 </section>
 
 </main>
 
-<section class="panel" style="margin-top:16px">
-
-  <div class="panel-head">
-    <div>
-      <h2>Exam timetable</h2>
-      <div class="muted" style="font-size:12px">
-        Your exam dates and after-exam revision
-      </div>
-    </div>
-  </div>
-
-  <div class="exam-list">
-    <div class="exam-card">
-      <span>MON · 30 NOV</span>
-      <strong>Mathematics</strong>
-      <span>Exam 1</span>
-    </div>
-
-    <div class="exam-card">
-      <span>WED · 2 DEC</span>
-      <strong>Sanskrit</strong>
-      <span>Exam 2</span>
-    </div>
-
-    <div class="exam-card">
-      <span>THU · 3 DEC</span>
-      <strong>Science</strong>
-      <span>Exam 3</span>
-    </div>
-
-    <div class="exam-card">
-      <span>FRI · 4 DEC</span>
-      <strong>English</strong>
-      <span>Exam 4</span>
-    </div>
-
-    <div class="exam-card">
-      <span>MON · 7 DEC</span>
-      <strong>Social Science</strong>
-      <span>Exam 5</span>
-    </div>
-  </div>
-
-</section>
-
-<div class="bottom">
-
-<section class="panel">
-
-  <h2 style="margin-bottom:10px">Daily study routine</h2>
-
-  <div class="task">
-    <strong>Slot 1 · 75–90 min</strong>
-    <div class="task-sub">
-      Learn concepts, read the chapter and make short notes.
-    </div>
-  </div>
-
-  <div class="task">
-    <strong>Break · 10 min</strong>
-    <div class="task-sub">
-      Get up, stretch and take a screen break.
-    </div>
-  </div>
-
-  <div class="task">
-    <strong>Slot 2 · 75–90 min</strong>
-    <div class="task-sub">
-      Solve textbook questions, examples and written practice.
-    </div>
-  </div>
-
-  <div class="task">
-    <strong>Recall · 20–30 min</strong>
-    <div class="task-sub">
-      Close the book and recall key points, formulas or definitions.
-    </div>
-  </div>
-
-</section>
-
-<section class="panel">
-
-  <h2 style="margin-bottom:10px">Plan notes</h2>
-
-  <div class="tip">
-    <strong>Maths priority:</strong>
-    Chapters 4 and 5 are treated as new learning because
-    you missed them earlier.
-  </div>
-
-  <div class="tip" style="margin-top:9px">
-    <strong>English:</strong>
-    Exactly two main slots. Writing formats only get a quick recap.
-  </div>
-
-  <div class="tip" style="margin-top:9px">
-    <strong>Sanskrit:</strong>
-    All writing skills are grouped into one slot.
-  </div>
-
-  <div class="tip" style="margin-top:9px">
-    <strong>Weekends:</strong>
-    Saturdays and Sundays are kept free.
-  </div>
-
-  <div class="controls" style="margin-top:13px">
-    <button class="btn" id="exportBtn">Export progress</button>
-    <button class="btn" id="resetBtn">Reset checkboxes</button>
-  </div>
-
-  <div class="muted" id="saveNote" style="font-size:11px;margin-top:8px">
-    Progress saves automatically in this browser.
-  </div>
-
-</section>
-
-</div>
-
-<div class="footer">
-  Made for your PT3 preparation · Progress is stored locally in this browser.
-</div>
-
-</div>
+<footer>
+  Made for your Class 9 PT3 preparation · 2026
+  <br>
+  Progress is saved in this browser on this device.
+</footer>
 
 <script>
 
-/* =====================================
-   STUDY PLAN
-===================================== */
+/* THEME */
 
-const plan = {
+function toggleTheme() {
+  document.body.classList.toggle("dark");
 
-"2026-11-12":[
-["math","Maths Ch 4 — Exploring Algebraic Identities","Slot 1 · Learn the concepts and identity patterns."],
-["math","Maths Ch 4 — Examples and exercises","Slot 2 · Work through examples, then solve questions independently."],
-["review","Daily recall","Recall the identities without looking at your notes."]
-],
+  const dark = document.body.classList.contains("dark");
 
-"2026-11-13":[
-["math","Maths Ch 5 — I'm Up and Down, and Round and Round","Slot 1 · Start from scratch and understand the concepts."],
-["math","Maths Ch 5 — Worked examples and exercises","Slot 2 · Practise the methods introduced today."],
-["review","Daily recall","Review Ch 4 briefly and list doubts from Ch 5."]
-],
+  localStorage.setItem("pt3-theme", dark ? "dark" : "light");
 
-"2026-11-16":[
-["math","Maths Ch 5 — Advanced practice","Slot 1 · Continue learning and solve mixed questions."],
-["math","Maths Ch 6 — Measuring Space: Perimeter and Area","Slot 2 · Learn formulas and work through examples."],
-["review","Daily recall","Recall Ch 5 methods and Ch 6 formulas."]
-],
-
-"2026-11-17":[
-["math","Maths Ch 7 — The Mathematics of Maybe: Probability","Slot 1 · Concepts, sample spaces and textbook questions."],
-["science","Physics Ch 6 — How Forces Affect Motion","Slot 2 · Learn concepts, definitions and examples."],
-["review","Daily recall","Revise Maths formulas and Physics key terms."]
-],
-
-"2026-11-18":[
-["science","Physics Ch 7 — Work, Energy and Simple Machines","Slot 1 · Cover only up to the law of conservation of mechanical energy (page 129)."],
-["science","Chemistry Ch 5 — Exploring Mixtures and Their Separation","Slot 2 · Pages 83–89 only."],
-["review","Daily recall","Recall Physics definitions and separation methods."]
-],
-
-"2026-11-19":[
-["science","Chemistry Ch 8 — Journey Inside the Atom","Slot 1 · Understand atomic structure and practise questions."],
-["science","Biology Ch 3 — Tissues in Action","Slot 2 · Learn tissue types, functions and diagrams."],
-["review","Daily recall","Revise Chemistry terms and Biology diagrams."]
-],
-
-"2026-11-20":[
-["science","Biology Ch 11 — Reproduction: How Life Continues","Slot 1 · Study only up to page 212."],
-["sanskrit","Sanskrit grammar: लोट् लकार and विधिलिङ् लकार","Slot 2 · Rules, forms and written practice."],
-["review","Daily recall","Test yourself on the two Sanskrit लकार forms."]
-],
-
-"2026-11-23":[
-["sanskrit","Sanskrit grammar","Slot 1 · कारक एवं उपपद विभक्ति, संख्या and प्रश्न निर्माण."],
-["sanskrit","Sanskrit writing skills","Slot 2 · अपठित गद्यांश, चित्र वर्णन, संवाद and पत्र लेखन. Practise each format once."],
-["review","Daily recall","Revise both prescribed Sanskrit lessons briefly."]
-],
-
-"2026-11-24":[
-["sst","SST Ch 7 — Elections","Slot 1 · Read, make concise notes and practise answers."],
-["sst","SST Ch 9 — The Prize Puzzle","Slot 2 · Demand and supply only, up to page 203."],
-["review","Daily recall","Recall key terms and explain demand and supply in your own words."]
-],
-
-"2026-11-25":[
-["sst","Part 2 Ch 1 — Oceans and Life","Slot 1 · Study only up to Ocean currents (page 8)."],
-["sst","Part 2 Ch 3 — Resistance and Resilience (1000–1700 CE)","Slot 2 · Study only up to page 65."],
-["review","Daily recall","Make a quick timeline and recall key geography terms."]
-],
-
-"2026-11-26":[
-["english","English Slot 1 — Literature","How I Taught My Grandmother to Read + I Cannot Remember My Mother. Review themes, meanings and textual questions."],
-["english","English Slot 2 — Literature","The World of Limitless Possibilities + Nine Gold Medals. Practise extract-based and short answers."],
-["review","English quick recap","Briefly practise reading comprehension and integrated grammar. Writing formats get a quick recap only."]
-],
-
-"2026-11-27":[
-["math","Maths — Full revision and timed practice","Revise Ch 4–7, attempt a timed mixed paper and review every mistake."],
-["science","Science — Full revision and question practice","Revise Physics, Chemistry and Biology. Practise diagrams, definitions and numericals."],
-["review","Final preparation check","List any remaining doubts. Do not start large new topics today."]
-],
-
-"2026-11-30":[
-["exam","MATHEMATICS EXAM","Before the exam: formulas, common mistakes and a calm final review."],
-["sanskrit","Sanskrit — Full revision","After the exam: both lessons, grammar rules, forms and writing formats."],
-["review","Sanskrit self-test","Attempt a short mixed grammar and literature test."]
-],
-
-"2026-12-01":[
-["sanskrit","Sanskrit — Timed practice","Practise अपठित गद्यांश, पठित पद्यांश/नाट्यांश, प्रश्न निर्माण and grammar."],
-["sanskrit","Sanskrit — Final revision","Review both lessons, संख्या, विभक्ति, लकार and all writing formats."],
-["review","Mistake review","Revisit mistakes from the timed practice."]
-],
-
-"2026-12-02":[
-["exam","SANSKRIT EXAM","Before the exam: grammar forms, lesson meanings and writing formats."],
-["science","Science — Physics and Chemistry revision","After the exam: key concepts, formulas, numericals and atomic structure."],
-["review","Science diagrams and definitions","Recall Biology diagrams, definitions and important processes."]
-],
-
-"2026-12-03":[
-["exam","SCIENCE EXAM","Before the exam: diagrams, definitions, formulas and important concepts."],
-["english","English — Literature revision","After the exam: revise all four pieces, themes and important answers."],
-["review","English language recap","Quick reading comprehension, integrated grammar and writing-format recap."]
-],
-
-"2026-12-04":[
-["exam","ENGLISH EXAM","Before the exam: literature, grammar and reading comprehension."],
-["sst","SST — Full revision","After the exam: revise all four prescribed chapters and key terms."],
-["review","SST answer practice","Practise explaining key concepts and writing structured answers."]
-],
-
-"2026-12-07":[
-["exam","SOCIAL SCIENCE EXAM","Before the exam: quick recall of key terms, concepts, timelines and chapter summaries."]
-]
-
-};
-
-/* =====================================
-   SETTINGS AND STORAGE
-===================================== */
-
-const subjects = {
-  math:"Maths",
-  science:"Science",
-  sanskrit:"Sanskrit",
-  sst:"Social Science",
-  english:"English",
-  exam:"Exam",
-  review:"Revision"
-};
-
-const STORAGE_KEY = "class9-pt3-progress-v1";
-const THEME_KEY = "pt3-theme";
-
-let completed = {};
-
-try {
-  completed = JSON.parse(
-    localStorage.getItem(STORAGE_KEY) || "{}"
-  ) || {};
-} catch(e) {
-  completed = {};
+  document.getElementById("themeButton").textContent =
+    dark ? "☀️ Light Mode" : "🌙 Dark Mode";
 }
 
-let selected = "2026-11-12";
-let shownMonth = new Date(2026,10,1);
-let activeFilter = "all";
-
-const $ = id => document.getElementById(id);
-
-const pad = n => String(n).padStart(2,"0");
-
-const keyFor = (y,m,d) =>
-  `${y}-${pad(m+1)}-${pad(d)}`;
-
-const dateFromKey = k => {
-  const [y,m,d] = k.split("-").map(Number);
-  return new Date(y,m-1,d);
-};
-
-/* =====================================
-   DARK MODE
-===================================== */
-
-const themeToggle = $("themeToggle");
-
-function applyTheme(theme) {
-
-  document.body.dataset.theme = theme;
-
-  themeToggle.textContent =
-    theme === "dark"
-      ? "☀️ Light Mode"
-      : "🌙 Dark Mode";
-
-  document.querySelector('meta[name="theme-color"]')
-    .setAttribute(
-      "content",
-      theme === "dark" ? "#0d111b" : "#111827"
-    );
-
-  try {
-    localStorage.setItem(THEME_KEY,theme);
-  } catch(e) {}
+if (localStorage.getItem("pt3-theme") === "dark") {
+  document.body.classList.add("dark");
+  document.getElementById("themeButton").textContent = "☀️ Light Mode";
 }
 
-let savedTheme = "light";
 
-try {
-  savedTheme = localStorage.getItem(THEME_KEY) || "light";
-} catch(e) {}
+/* NAVIGATION */
 
-applyTheme(savedTheme);
+function showView(view, button) {
+  document.querySelectorAll(".view").forEach(v => {
+    v.classList.remove("active");
+  });
 
-themeToggle.addEventListener("click",() => {
+  document.getElementById(view).classList.add("active");
 
-  const currentTheme = document.body.dataset.theme;
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    b.classList.remove("active");
+  });
 
-  applyTheme(
-    currentTheme === "dark" ? "light" : "dark"
-  );
+  button.classList.add("active");
 
-});
-
-/* =====================================
-   TASK FUNCTIONS
-===================================== */
-
-function allTasks() {
-
-  return Object.entries(plan).flatMap(([date,tasks]) =>
-    tasks.map((t,i) => ({
-      id:`${date}-${i}`,
-      date,
-      type:t[0],
-      title:t[1],
-      desc:t[2]
-    }))
-  );
-
-}
-
-function save() {
-
-  try {
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(completed)
-    );
-
-    $("saveNote").textContent =
-      "Saved automatically on this device.";
-
-  } catch(e) {
-
-    $("saveNote").textContent =
-      "Browser storage unavailable; progress may not persist.";
-
+  if (view === "learn") {
+    renderSyllabus();
   }
-
-  updateStats();
-
 }
 
-/* =====================================
-   PROGRESS AND EXAM TRACKER
-===================================== */
 
-function updateStats() {
+/* DAILY STUDY PLAN */
 
-  const tasks = allTasks();
+const plans = {
+  "2026-11-12": [
+    "Mathematics Ch 4: Learn algebraic identities from scratch.",
+    "Mathematics Ch 4: Work through examples and textbook exercises.",
+    "Recall the identities without looking at your notes."
+  ],
 
-  const done = tasks.filter(t =>
-    completed[t.id]
-  ).length;
+  "2026-11-13": [
+    "Mathematics Ch 5: Learn the chapter from scratch.",
+    "Understand concepts and solve worked examples.",
+    "Practise basic textbook questions."
+  ],
 
-  const pct = tasks.length
-    ? Math.round(done/tasks.length*100)
-    : 0;
+  "2026-11-16": [
+    "Mathematics Ch 5: Advanced practice and problem-solving.",
+    "Mathematics Ch 6: Learn perimeter and area concepts.",
+    "Practise important formulas."
+  ],
 
-  $("doneCount").textContent =
-    `${done} / ${tasks.length}`;
+  "2026-11-17": [
+    "Mathematics Ch 7: Probability concepts and questions.",
+    "Physics Ch 6: How forces affect motion.",
+    "Revise key definitions and examples."
+  ],
 
-  $("percent").textContent = pct + "%";
+  "2026-11-18": [
+    "Physics Ch 7: Work, Energy and Simple Machines up to page 129.",
+    "Chemistry Ch 5: Mixtures and separation, pages 83–89.",
+    "Practise definitions and questions."
+  ],
 
-  $("progressFill").style.width = pct + "%";
+  "2026-11-19": [
+    "Chemistry Ch 8: Journey Inside the Atom.",
+    "Biology Ch 3: Tissues in action.",
+    "Revise diagrams and important terminology."
+  ],
 
-  const exams = [
-    ["Mathematics","2026-11-30"],
-    ["Sanskrit","2026-12-02"],
-    ["Science","2026-12-03"],
-    ["English","2026-12-04"],
-    ["Social Science","2026-12-07"]
-  ];
+  "2026-11-20": [
+    "Biology Ch 11: Reproduction, up to page 212.",
+    "Sanskrit: लोट् लकार and विधिलिङ् लकार.",
+    "Practise grammar questions."
+  ],
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
+  "2026-11-23": [
+    "Sanskrit: कारक एवं उपपद विभक्ति, संख्या and प्रश्न निर्माण.",
+    "Sanskrit writing: अपठित गद्यांश, चित्र वर्णन, संवाद and पत्र लेखन.",
+    "Practise one combined Sanskrit worksheet."
+  ],
 
-  const next = exams.find(e =>
-    dateFromKey(e[1]) >= today
-  ) || exams[exams.length-1];
+  "2026-11-24": [
+    "SST Part 1 Ch 7: Elections.",
+    "SST Part 1 Ch 9: Demand and supply only, up to page 203.",
+    "Revise important terms and concepts."
+  ],
 
-  $("nextExam").textContent = next[0];
+  "2026-11-25": [
+    "SST Part 2 Ch 1: Oceans and Life up to Ocean currents, page 8.",
+    "SST Part 2 Ch 3: Resistance and Resilience, 1000–1700 CE, up to page 65.",
+    "Practise short and long answers."
+  ],
 
-  $("nextExamDate").textContent =
-    dateFromKey(next[1]).toLocaleDateString(
-      "en-IN",
-      {
-        day:"numeric",
-        month:"long"
-      }
-    );
+  "2026-11-26": [
+    "English: How I Taught My Grandmother to Read.",
+    "English: I Cannot Remember My Mother.",
+    "English: The World of Limitless Possibilities and Nine Gold Medals.",
+    "Quick reading comprehension and integrated grammar practice.",
+    "Quick recap of writing formats."
+  ],
 
+  "2026-11-27": [
+    "Mathematics: Full revision and timed practice paper.",
+    "Science: Full revision and question practice.",
+    "Review mistakes and weak areas."
+  ],
+
+  "2026-11-30": [
+    "MATHEMATICS EXAM.",
+    "Evening: Sanskrit full revision and self-test."
+  ],
+
+  "2026-12-01": [
+    "Sanskrit: Timed practice and final revision."
+  ],
+
+  "2026-12-02": [
+    "SANSKRIT EXAM.",
+    "Evening: Science Physics and Chemistry revision.",
+    "Biology diagrams and definitions."
+  ],
+
+  "2026-12-03": [
+    "SCIENCE EXAM.",
+    "Evening: English literature revision and language recap."
+  ],
+
+  "2026-12-04": [
+    "ENGLISH EXAM.",
+    "Evening: SST full revision and answer practice."
+  ],
+
+  "2026-12-07": [
+    "SOCIAL SCIENCE EXAM.",
+    "Quick morning recall of important points."
+  ]
+};
+
+let selectedDate = "2026-11-12";
+let currentMonth = 10;
+let currentYear = 2026;
+
+let dailyProgress = JSON.parse(
+  localStorage.getItem("class9-pt3-progress-v1") || "{}"
+);
+
+function saveDaily() {
+  localStorage.setItem(
+    "class9-pt3-progress-v1",
+    JSON.stringify(dailyProgress)
+  );
 }
 
-/* =====================================
-   CALENDAR
-===================================== */
+function dateKey(year, month, day) {
+  return year + "-" +
+    String(month + 1).padStart(2, "0") + "-" +
+    String(day).padStart(2, "0");
+}
 
 function renderCalendar() {
-
-  const y = shownMonth.getFullYear();
-  const m = shownMonth.getMonth();
-
-  const first = new Date(y,m,1).getDay();
-  const days = new Date(y,m+1,0).getDate();
-
-  $("monthTitle").textContent =
-    shownMonth.toLocaleDateString(
-      "en-IN",
-      {
-        month:"long",
-        year:"numeric"
-      }
-    );
-
-  const cal = $("calendar");
-  cal.innerHTML = "";
-
-  ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-    .forEach(w => {
-
-      const e = document.createElement("div");
-
-      e.className = "weekday";
-      e.textContent = w;
-
-      cal.appendChild(e);
-
-    });
-
-  for(let i=0;i<first;i++) {
-
-    const e = document.createElement("div");
-
-    e.className = "day empty";
-
-    cal.appendChild(e);
-
-  }
-
-  const todayKey = "2026-11-11";
-
-  for(let d=1;d<=days;d++) {
-
-    const k = keyFor(y,m,d);
-
-    const date = new Date(y,m,d);
-
-    const weekend =
-      date.getDay()===0 || date.getDay()===6;
-
-    const tasks = plan[k] || [];
-
-    const b = document.createElement("button");
-
-    b.className =
-      "day" +
-      (weekend ? " weekend" : "") +
-      (k===selected ? " selected" : "") +
-      (k===todayKey ? " today" : "");
-
-    b.setAttribute(
-      "aria-label",
-      date.toDateString()
-    );
-
-    const marks = [...new Set(
-      tasks.map(t=>t[0])
-    )]
-    .map(s=>`<i class="dot ${s}"></i>`)
-    .join("");
-
-    const completedCount = tasks.filter((t,i) =>
-      completed[`${k}-${i}`]
-    ).length;
-
-    b.innerHTML =
-      `<div class="daynum">${d}</div>` +
-      `<div class="daymarks">${marks}</div>` +
-      (
-        tasks.length
-          ? `<div class="day-label">${completedCount}/${tasks.length} done</div>`
-          : weekend
-            ? '<div class="day-label">Rest day</div>'
-            : ""
-      );
-
-    b.addEventListener("click",() => {
-
-      selected = k;
-
-      renderCalendar();
-      renderDetails();
-
-    });
-
-    cal.appendChild(b);
-
-  }
-
-}
-
-/* =====================================
-   DAILY CHECKLIST
-===================================== */
-
-function renderDetails() {
-
-  const date = dateFromKey(selected);
-
-  $("detailHeading").textContent =
-    date.toLocaleDateString(
-      "en-IN",
-      {
-        weekday:"short",
-        day:"numeric",
-        month:"short"
-      }
-    );
-
-  const tasks = plan[selected] || [];
-
-  const list = $("taskList");
-
-  list.innerHTML = "";
-
-  const filtered = tasks
-    .map((t,i)=>({t,i}))
-    .filter(({t}) =>
-      activeFilter==="all" ||
-      t[0]===activeFilter
-    );
-
-  if(!filtered.length) {
-
-    list.innerHTML =
-      `<div class="empty-state">${
-        tasks.length
-          ? "No tasks for this filter."
-          : "No scheduled study today. Take your planned rest day!"
-      }</div>`;
-
-    return;
-
-  }
-
-  filtered.forEach(({t,i}) => {
-
-    const id = `${selected}-${i}`;
-
-    const done = !!completed[id];
-
-    const card = document.createElement("div");
-
-    card.className =
-      "task" + (done ? " done" : "");
-
-    const tag =
-      t[0]==="review"
-        ? "Revision"
-        : subjects[t[0]];
-
-    card.innerHTML = `
-      <div class="task-top">
-
-        <input type="checkbox"
-          ${done?"checked":""}
-          aria-label="Mark task complete">
-
-        <div style="min-width:0">
-
-          <span class="tag ${t[0]}">${tag}</span>
-
-          <div class="task-title"></div>
-
-          <div class="task-sub"></div>
-
-        </div>
-
-      </div>
-    `;
-
-    card.querySelector(".task-title")
-      .textContent = t[1];
-
-    card.querySelector(".task-sub")
-      .textContent = t[2];
-
-    card.querySelector("input")
-      .addEventListener("change",e => {
-
-        completed[id] = e.target.checked;
-
-        save();
-
-        renderDetails();
-        renderCalendar();
-
-      });
-
-    list.appendChild(card);
-
-  });
-
-}
-
-/* =====================================
-   CALENDAR NAVIGATION
-===================================== */
-
-$("prevMonth").onclick = () => {
-
-  shownMonth = new Date(
-    shownMonth.getFullYear(),
-    shownMonth.getMonth()-1,
-    1
-  );
-
-  renderCalendar();
-
-};
-
-$("nextMonth").onclick = () => {
-
-  shownMonth = new Date(
-    shownMonth.getFullYear(),
-    shownMonth.getMonth()+1,
-    1
-  );
-
-  renderCalendar();
-
-};
-
-$("todayBtn").onclick = () => {
-
-  const now = new Date();
-
-  selected =
-    `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-
-  shownMonth = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    1
-  );
-
-  renderCalendar();
-  renderDetails();
-
-};
-
-/* =====================================
-   SUBJECT FILTERS
-===================================== */
-
-$("filters").addEventListener("click",e => {
-
-  const b = e.target.closest(
-    "button[data-filter]"
-  );
-
-  if(!b) return;
-
-  activeFilter = b.dataset.filter;
-
-  document.querySelectorAll(".filter")
-    .forEach(x => {
-
-      x.classList.toggle(
-        "active",
-        x===b
-      );
-
-    });
-
-  renderDetails();
-
-});
-
-/* =====================================
-   RESET PROGRESS
-===================================== */
-
-$("resetBtn").onclick = () => {
-
-  if(confirm(
-    "Reset all completed checkboxes on this device?"
-  )) {
-
-    completed = {};
-
-    save();
-
-    renderCalendar();
-    renderDetails();
-
-  }
-
-};
-
-/* =====================================
-   EXPORT CSV
-===================================== */
-
-$("exportBtn").onclick = () => {
-
-  const rows = [
-    ["Date","Subject","Task","Status"]
+  const calendar = document.getElementById("calendar");
+  calendar.innerHTML = "";
+
+  const monthNames = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
   ];
 
-  allTasks().forEach(t => {
+  document.getElementById("monthTitle").textContent =
+    monthNames[currentMonth] + " " + currentYear;
 
-    rows.push([
-      t.date,
-      subjects[t.type] || "Revision",
-      t.title,
-      completed[t.id]
-        ? "Completed"
-        : "Not completed"
-    ]);
-
+  ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(day => {
+    const el = document.createElement("div");
+    el.className = "day-name";
+    el.textContent = day;
+    calendar.appendChild(el);
   });
 
-  const csv = rows.map(r =>
-    r.map(v =>
-      '"' + String(v).replace(/"/g,'""') + '"'
+  let firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  firstDay = (firstDay + 6) % 7;
+
+  const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement("div");
+    blank.className = "date empty";
+    calendar.appendChild(blank);
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const key = dateKey(currentYear, currentMonth, day);
+    const button = document.createElement("button");
+
+    button.className = "date";
+    button.textContent = day;
+
+    if (plans[key]) {
+      button.classList.add("today-plan");
+      const small = document.createElement("small");
+      small.textContent = "Study";
+      button.appendChild(small);
+    }
+
+    if (key === selectedDate) {
+      button.classList.add("selected");
+    }
+
+    if (key === "2026-11-30" ||
+        key === "2026-12-02" ||
+        key === "2026-12-03" ||
+        key === "2026-12-04" ||
+        key === "2026-12-07") {
+      button.classList.add("exam");
+    }
+
+    button.onclick = () => {
+      selectedDate = key;
+      renderCalendar();
+      renderDailyTasks();
+    };
+
+    calendar.appendChild(button);
+  }
+}
+
+function changeMonth(direction) {
+  currentMonth += direction;
+
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+
+  renderCalendar();
+}
+
+function renderDailyTasks() {
+  const tasks = plans[selectedDate] || [];
+
+  const date = new Date(selectedDate + "T12:00:00");
+
+  document.getElementById("dayTitle").textContent =
+    date.toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    });
+
+  document.getElementById("selectedDateText").textContent =
+    date.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short"
+    });
+
+  const container = document.getElementById("dailyTasks");
+  container.innerHTML = "";
+
+  if (!tasks.length) {
+    container.innerHTML =
+      '<p class="muted">No scheduled study tasks for this date. Enjoy your free day!</p>';
+  }
+
+  tasks.forEach((task, index) => {
+    const id = selectedDate + "-" + index;
+    const checked = !!dailyProgress[id];
+
+    const label = document.createElement("label");
+    label.className = "task" + (checked ? " done" : "");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = checked;
+
+    checkbox.onchange = () => {
+      dailyProgress[id] = checkbox.checked;
+      saveDaily();
+      renderDailyTasks();
+    };
+
+    const span = document.createElement("span");
+    span.textContent = task;
+
+    label.appendChild(checkbox);
+    label.appendChild(span);
+    container.appendChild(label);
+  });
+
+  const completed = tasks.filter((task, index) =>
+    dailyProgress[selectedDate + "-" + index]
+  ).length;
+
+  const percent = tasks.length
+    ? Math.round(completed / tasks.length * 100)
+    : 0;
+
+  document.getElementById("dailyProgress").textContent = percent + "%";
+  document.getElementById("dailyBar").style.width = percent + "%";
+}
+
+function resetDaily() {
+  if (!confirm("Reset all daily planner checkboxes?")) return;
+
+  dailyProgress = {};
+  saveDaily();
+  renderDailyTasks();
+}
+
+function exportProgress() {
+  let rows = [["Date", "Task", "Completed"]];
+
+  Object.keys(plans).forEach(date => {
+    plans[date].forEach((task, index) => {
+      rows.push([
+        date,
+        task,
+        dailyProgress[date + "-" + index] ? "Yes" : "No"
+      ]);
+    });
+  });
+
+  const csv = rows.map(row =>
+    row.map(value =>
+      '"' + String(value).replace(/"/g, '""') + '"'
     ).join(",")
   ).join("\n");
 
-  const blob = new Blob(
-    [csv],
-    {type:"text/csv;charset=utf-8"}
-  );
-
+  const blob = new Blob([csv], {type: "text/csv"});
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
-
   a.href = url;
-  a.download = "PT3-study-progress.csv";
-
+  a.download = "PT3-daily-progress.csv";
   a.click();
 
   URL.revokeObjectURL(url);
+}
 
-};
 
-/* =====================================
-   INITIALIZE WEBSITE
-===================================== */
+/* COMPLETE SYLLABUS DATA */
+
+const syllabus = [
+
+  {
+    subject: "Mathematics",
+    chapters: [
+      {
+        title: "Chapter 4 — Exploring Algebraic Identities",
+        topics: [
+          "Understand algebraic identities",
+          "Learn and memorise the important identities",
+          "Understand how to expand expressions",
+          "Practise factorisation using identities",
+          "Solve textbook examples and exercises",
+          "Practise mixed and application-based questions"
+        ]
+      },
+      {
+        title: "Chapter 5 — I'm Up and Down, and Round and Round",
+        topics: [
+          "Learn the chapter concepts from scratch",
+          "Understand the main mathematical ideas",
+          "Study worked examples",
+          "Practise textbook exercises",
+          "Solve application-based questions",
+          "Attempt mixed practice questions"
+        ]
+      },
+      {
+        title: "Chapter 6 — Measuring Space: Perimeter and Area",
+        topics: [
+          "Understand perimeter",
+          "Understand area",
+          "Learn relevant formulas",
+          "Solve textbook examples",
+          "Practise word problems and applications"
+        ]
+      },
+      {
+        title: "Chapter 7 — The Mathematics of Maybe: Introduction to Probability",
+        topics: [
+          "Understand the meaning of probability",
+          "Learn basic probability concepts",
+          "Identify possible outcomes",
+          "Solve textbook examples",
+          "Practise probability questions"
+        ]
+      }
+    ]
+  },
+
+  {
+    subject: "Science",
+    chapters: [
+      {
+        title: "Physics — Chapter 6: How Forces Affect Motion",
+        topics: [
+          "Understand force and its effects",
+          "Study how forces affect motion",
+          "Learn important definitions and concepts",
+          "Practise numerical and conceptual questions",
+          "Revise textbook exercises"
+        ]
+      },
+      {
+        title: "Physics — Chapter 7: Work, Energy and Simple Machines",
+        limit: "Study only up to the law of conservation of mechanical energy (page 129).",
+        topics: [
+          "Understand work",
+          "Understand energy",
+          "Study simple machines",
+          "Learn mechanical energy",
+          "Study the law of conservation of mechanical energy",
+          "Practise relevant textbook questions up to page 129"
+        ]
+      },
+      {
+        title: "Chemistry — Chapter 5: Exploring Mixtures and Their Separation",
+        limit: "Only pages 83–89.",
+        topics: [
+          "Study the prescribed section on mixtures",
+          "Understand separation methods covered in pages 83–89",
+          "Learn important definitions",
+          "Practise questions from the prescribed pages"
+        ]
+      },
+      {
+        title: "Chemistry — Chapter 8: Journey Inside the Atom",
+        topics: [
+          "Understand the structure of an atom",
+          "Learn about subatomic particles",
+          "Understand atomic number and mass number",
+          "Study important atomic concepts",
+          "Practise diagrams and textbook questions"
+        ]
+      },
+      {
+        title: "Biology — Chapter 3: Tissues in Action",
+        topics: [
+          "Understand tissues",
+          "Study the different types of tissues",
+          "Learn their functions",
+          "Practise diagrams and labelling",
+          "Revise definitions and textbook questions"
+        ]
+      },
+      {
+        title: "Biology — Chapter 11: Reproduction: How Life Continues",
+        limit: "Study only up to page 212.",
+        topics: [
+          "Understand the prescribed reproduction concepts",
+          "Study important terminology",
+          "Learn the relevant processes",
+          "Practise diagrams where applicable",
+          "Revise questions up to page 212"
+        ]
+      }
+    ]
+  },
+
+  {
+    subject: "Sanskrit",
+    chapters: [
+      {
+        title: "पाठ — मनः पूतं समाचरेत्",
+        topics: [
+          "Read and understand the lesson",
+          "Learn important शब्दार्थ",
+          "Study पाठ्यपुस्तक questions and answers",
+          "Practise relevant grammar from the lesson"
+        ]
+      },
+      {
+        title: "पाठ — उपायं चिन्तयेत् प्राज्ञः तथापायं च चिन्तयेत्",
+        topics: [
+          "Read and understand the lesson",
+          "Learn important शब्दार्थ",
+          "Study पाठ्यपुस्तक questions and answers",
+          "Practise relevant grammar from the lesson"
+        ]
+      },
+      {
+        title: "Grammar — लोट् and विधिलिङ् लकार",
+        topics: [
+          "लोट् लकार",
+          "विधिलिङ् लकार",
+          "Practise forms and conjugations",
+          "Solve grammar exercises"
+        ]
+      },
+      {
+        title: "Grammar — कारक एवं उपपद विभक्ति",
+        topics: [
+          "Learn कारक",
+          "Learn उपपद विभक्ति",
+          "Understand their usage",
+          "Practise sentence-based questions"
+        ]
+      },
+      {
+        title: "Grammar — संख्या",
+        topics: [
+          "Revise संख्या",
+          "Practise number-based questions"
+        ]
+      },
+      {
+        title: "Grammar — प्रश्न निर्माण",
+        topics: [
+          "Understand question formation",
+          "Practise प्रश्न निर्माण from given sentences"
+        ]
+      },
+      {
+        title: "Comprehension and Literature",
+        topics: [
+          "अपठित गद्यांश",
+          "पठित पद्यांश",
+          "पठित नाट्यांश"
+        ]
+      },
+      {
+        title: "Writing Skills",
+        topics: [
+          "चित्र वर्णन",
+          "संवाद लेखन",
+          "पत्र लेखन"
+        ]
+      }
+    ]
+  },
+
+  {
+    subject: "English",
+    chapters: [
+      {
+        title: "Literature — How I Taught My Grandmother to Read",
+        topics: [
+          "Read and understand the chapter",
+          "Learn character details",
+          "Understand the main themes",
+          "Prepare important questions and answers"
+        ]
+      },
+      {
+        title: "Poem — I Cannot Remember My Mother",
+        topics: [
+          "Understand the poem",
+          "Study the central idea",
+          "Understand important poetic expressions",
+          "Practise reference-to-context questions"
+        ]
+      },
+      {
+        title: "Literature — The World of Limitless Possibilities",
+        topics: [
+          "Read and understand the chapter",
+          "Learn important points",
+          "Prepare important questions and answers"
+        ]
+      },
+      {
+        title: "Poem — Nine Gold Medals",
+        topics: [
+          "Understand the poem",
+          "Study the central idea and message",
+          "Understand important poetic expressions",
+          "Practise reference-to-context questions"
+        ]
+      },
+      {
+        title: "Reading Comprehension",
+        topics: [
+          "Practise unseen passages",
+          "Practise inference-based questions",
+          "Improve answer accuracy"
+        ]
+      },
+      {
+        title: "Integrated Grammar",
+        topics: [
+          "Revise prescribed grammar concepts",
+          "Practise mixed grammar exercises"
+        ]
+      },
+      {
+        title: "Writing Skills — Quick Revision",
+        topics: [
+          "Letter to the Editor",
+          "Notice Writing",
+          "Informal Invitation Letter"
+        ]
+      }
+    ]
+  },
+
+  {
+    subject: "Social Science",
+    chapters: [
+      {
+        title: "Part 1 — Chapter 7: Elections",
+        topics: [
+          "Read and understand the chapter",
+          "Learn important election-related concepts",
+          "Revise key terms",
+          "Practise textbook questions",
+          "Prepare short and long answers"
+        ]
+      },
+      {
+        title: "Part 1 — Chapter 9: The Prize Puzzle",
+        limit: "Only demand and supply, up to page 203.",
+        topics: [
+          "Understand demand",
+          "Understand supply",
+          "Study the relationship between demand and supply",
+          "Learn important terms",
+          "Practise questions from the prescribed section"
+        ]
+      },
+      {
+        title: "Part 2 — Chapter 1: Oceans and Life",
+        limit: "Only up to Ocean currents, page 8.",
+        topics: [
+          "Study the prescribed concepts about oceans",
+          "Understand ocean currents",
+          "Learn important terms",
+          "Revise textbook questions up to the prescribed limit"
+        ]
+      },
+      {
+        title: "Part 2 — Chapter 3: Resistance and Resilience (1000–1700 CE)",
+        limit: "Only up to page 65.",
+        topics: [
+          "Read and understand the prescribed historical section",
+          "Learn important events and developments",
+          "Revise important people and terms",
+          "Prepare short and long answers up to page 65"
+        ]
+      }
+    ]
+  }
+
+];
+
+
+/* LEARN HUB */
+
+let learnProgress = JSON.parse(
+  localStorage.getItem("class9-pt3-learn-v1") || "{}"
+);
+
+let activeFilter = "All";
+
+function saveLearn() {
+  localStorage.setItem(
+    "class9-pt3-learn-v1",
+    JSON.stringify(learnProgress)
+  );
+}
+
+function setFilter(subject, button) {
+  activeFilter = subject;
+
+  document.querySelectorAll(".filter-btn").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  renderSyllabus();
+}
+
+function getLearnStats() {
+  let total = 0;
+  let completed = 0;
+
+  syllabus.forEach((subject, s) => {
+    subject.chapters.forEach((chapter, c) => {
+      chapter.topics.forEach((topic, t) => {
+        total++;
+
+        if (learnProgress[s + "-" + c + "-" + t]) {
+          completed++;
+        }
+      });
+    });
+  });
+
+  return {total, completed};
+}
+
+function updateLearnStats() {
+  const stats = getLearnStats();
+
+  const percent = stats.total
+    ? Math.round(stats.completed / stats.total * 100)
+    : 0;
+
+  document.getElementById("learnPercent").textContent = percent + "%";
+  document.getElementById("learnCount").textContent =
+    stats.completed + " / " + stats.total;
+
+  document.getElementById("learnBar").style.width = percent + "%";
+}
+
+function renderSyllabus() {
+  const container = document.getElementById("syllabusContainer");
+  const search = document.getElementById("syllabusSearch")
+    .value.toLowerCase().trim();
+
+  container.innerHTML = "";
+
+  syllabus.forEach((subject, s) => {
+
+    if (activeFilter !== "All" && activeFilter !== subject.subject) {
+      return;
+    }
+
+    let subjectHasResults = false;
+
+    const section = document.createElement("div");
+    section.className = "subject-section";
+
+    const heading = document.createElement("div");
+    heading.className = "subject-heading";
+
+    const title = document.createElement("h3");
+    title.textContent = subject.subject;
+
+    heading.appendChild(title);
+    section.appendChild(heading);
+
+    subject.chapters.forEach((chapter, c) => {
+
+      const chapterMatches =
+        chapter.title.toLowerCase().includes(search) ||
+        (chapter.limit || "").toLowerCase().includes(search);
+
+      const matchingTopics = chapter.topics
+        .map((topic, t) => ({topic, t}))
+        .filter(item =>
+          item.topic.toLowerCase().includes(search) ||
+          chapterMatches ||
+          !search
+        );
+
+      if (!matchingTopics.length) return;
+
+      subjectHasResults = true;
+
+      const details = document.createElement("details");
+      details.className = "chapter";
+
+      const summary = document.createElement("summary");
+      summary.textContent = chapter.title;
+
+      const content = document.createElement("div");
+      content.className = "chapter-content";
+
+      if (chapter.limit) {
+        const limit = document.createElement("p");
+        limit.className = "chapter-meta";
+        limit.textContent = "📌 " + chapter.limit;
+        content.appendChild(limit);
+      }
+
+      const chapterCount = document.createElement("p");
+      chapterCount.className = "chapter-meta";
+
+      const doneInChapter = chapter.topics.filter((topic, t) =>
+        learnProgress[s + "-" + c + "-" + t]
+      ).length;
+
+      chapterCount.textContent =
+        doneInChapter + " / " + chapter.topics.length + " topics completed";
+
+      content.appendChild(chapterCount);
+
+      matchingTopics.forEach(item => {
+        const t = item.t;
+        const id = s + "-" + c + "-" + t;
+        const checked = !!learnProgress[id];
+
+        const label = document.createElement("label");
+        label.className = "learn-item" + (checked ? " done" : "");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = checked;
+
+        checkbox.onchange = () => {
+          learnProgress[id] = checkbox.checked;
+          saveLearn();
+          renderSyllabus();
+        };
+
+        const span = document.createElement("span");
+        span.textContent = item.topic;
+
+        label.appendChild(checkbox);
+        label.appendChild(span);
+        content.appendChild(label);
+      });
+
+      details.appendChild(summary);
+      details.appendChild(content);
+      section.appendChild(details);
+    });
+
+    if (subjectHasResults) {
+      container.appendChild(section);
+    }
+  });
+
+  if (!container.children.length) {
+    container.innerHTML =
+      '<div class="panel muted">No matching topics found. Try another search.</div>';
+  }
+
+  updateLearnStats();
+}
+
+function resetLearn() {
+  if (!confirm("Reset all your independent syllabus progress?")) return;
+
+  learnProgress = {};
+  saveLearn();
+  renderSyllabus();
+}
+
+
+/* INITIAL LOAD */
 
 renderCalendar();
-renderDetails();
-updateStats();
+renderDailyTasks();
+renderSyllabus();
 
 </script>
 
